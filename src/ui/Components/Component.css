@@ -1,0 +1,17 @@
+.search-input {
+    min-width: 400px;
+}
+
+.radio-label{
+    color: white;
+}
+
+.table-custom {
+    color: whitesmoke;
+    height: 400px;
+    
+}
+
+.table {
+    overflow-y: auto;
+}
