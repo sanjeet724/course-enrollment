@@ -14,31 +14,40 @@ class App extends Component {
       searchTerm: ""
     },
     query: {
-      result: []
+      result: [],
+      error: {
+        message: ""
+      }
     }
   };
+
+  componentDidMount() {
+    console.log("Component mounted....");
+    //check if db is up
+
+  }
 
   handleSearch = () => {
     // check if state is valid;
     const validTableKey = this.state.searchCriteria.tableKey;
     const searchTerm = this.state.searchCriteria.searchTerm;
+    const query = this.state.query;
     if (searchTerm && validTableKey) {
       // send the request to back-end
       console.log(`Searching for ${searchTerm} in ${validTableKey}`);
       const requestPath = PATH_URL + "/" + validTableKey + "/" + searchTerm;
       axios.get(requestPath).then(success => {
-        const query = this.state.query;
+        query.error.message = success.data.length > 0 ? "" : "No results found";
         query.result = success.data;
         this.setState(query);
       }).catch(err => {
-        const query = this.state.query;
         query.error = err;
         this.setState(query);
       });
       return;
     }
-
-    console.log("Not a valid search...");
+    query.error.message = "Not a valid search";
+    this.setState(query);
   }
 
   handleInstructorRadioClicked = (e) => {
@@ -67,6 +76,7 @@ class App extends Component {
 
   render() {
     const shouldShowTable = this.state.query.result.length > 0;
+    const shouldShowError = this.state.query.error !== "";
     return (
       <div className="App">
         <h1 className='header'>Course Enrollment System</h1>
@@ -80,6 +90,8 @@ class App extends Component {
             onInstructorRadioClicked={this.handleInstructorRadioClicked}
           />
           {shouldShowTable ? <ResultTable results={this.state.query.result} /> : null}
+          {shouldShowError ? <span className="badge badge-warning">{this.state.query.error.message}</span> : null}
+
         </div>
       </div >
     );

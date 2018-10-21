@@ -10,7 +10,7 @@ class Search extends Component {
                     <button className="btn btn-primary"
                         type="button"
                         id="search-button"
-                        onClick={() => onSearch()}>Search</button>
+                        onClick={(e) => onSearch(e)}>Search</button>
                 </div>
                 <input type="text"
                     className="form-control search-input"

@@ -6,10 +6,8 @@
     color: white;
 }
 
-.table-custom {
-    color: whitesmoke;
-    height: 400px;
-    
+.table-container {
+    min-height: 200px;
 }
 
 .table {
